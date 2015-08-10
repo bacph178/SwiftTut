@@ -2,54 +2,92 @@
 
 import UIKit
 
-var str = "Hello, playground"
-var myVariable = 42
-myVariable = 50
-let myConstant = 42
-let impliciInterger = 70
-let implicitDouble = 70.0
-let explicitDouble: Double = 70
-let explicitFloat: Float = 4
+/* vòng lặp for - in trong mảng các số nguyên sô lần duyệt là 5*/
+let individualScores = [75, 43, 103, 87, 12]
+var teamScore = 0
+for score in individualScores {
+    if score > 50 {
+        teamScore += 3
+    } else {
+        teamScore += 1
+    }
+}
+teamScore
 
-//converted type
-let label = "The width is " //string
-let width = 94 //int
-let widthLabel = label + String(width)
-
-//another way
-let apples = 3
-let oranges = 5
-let appleSummary = "I have \(apples) apples."
-let fruitSummary = "I have \(apples + oranges) pieces of fruit."
-
-let name = "Hoang Bac"
-let greeting = "Hello \(name)"
-
-//Tạo mảng sử dụng []
-var shoppingList = ["catfish", "water", "tulips", "blue paint"]
-shoppingList[1]
-shoppingList[1] = "bottle of water"
-shoppingList[1]
-shoppingList
-
-//Tạo mảng rỗng
-let emptyArray = [String]()
-
-//Tạo một dictionary
-var occupations = [
-    "Malcolm": "Captain",
-    "Kaylee": "Mechanic",
+/*vvòng lặp for - in trong mảng các dictionnary Tổng số lần duyệt là 8*/
+let interestingNumbers = [
+    "Prime": [2, 3, 5, 7, 11, 13],
+    "Fibonacci": [1, 1, 2, 3, 5, 8],
+    "Square": [1, 4, 9, 16, 25],
 ]
-occupations
-occupations["Malcolm"]
-occupations["Kaylee"]
-occupations["Jayne"] = "Public Relations"
-occupations
 
-// Tạo một dictionnary rỗng
-let emptyDictionary = [String: Float]()
+var largest = 0
+for (kind, numbers) in interestingNumbers {
+    for number in numbers {
+        if number > largest {
+            largest = number
+        }
+    }
+}
+largest
 
-//Khi không biết các kiểu giá trị khởi tạo thì có thể khai báo
-shoppingList = []
-occupations = [:]
 
+var times = 0
+let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+for (animalName, legCount) in numberOfLegs {
+    times += 1
+}
+times
+
+var firstForLoop = 0
+for i in 0..<4 {
+    firstForLoop += i
+}
+firstForLoop
+
+var optionalString: String? = "Hello"
+optionalString == nil
+
+var greeting = "Hello!"
+var optionalName: String? = nil
+if let name = optionalName {
+    greeting = "Hello, \(name)"
+} else {
+    greeting = "Hello"
+}
+
+optionalName = "Hoang Bac"
+if let name = optionalName {
+    greeting = "Hello, \(name)"
+}
+
+let vegetable = "red pepper"
+
+/* 
+chương trình sẽ thực hiện lệnh switch case tương ứng và thoát khỏi câu lệnh switch,
+không thực hiện case tiếp theo nên không cần có break ở đây
+*/
+switch vegetable {
+    case "celery":
+        let vegetableComment = "Add some raisins and make ants on a log."
+    case "cucumber", "watercress":
+        let vegetableComment = "that would make a good tea sandwich."
+    case let x where x.hasSuffix("pepper"):
+        let vegetableComment = "Is it a spicy \(x)?"
+    default:
+        let vegetableComment = "Everything tastes good in soup."
+}
+
+/*while*/
+
+var n = 2
+while n < 100 {
+    n = n * 2
+}
+n
+
+var m = 2
+do {
+    m = m * 2
+} while m < 100
+m
