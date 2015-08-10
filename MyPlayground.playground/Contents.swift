@@ -2,92 +2,136 @@
 
 import UIKit
 
-/* vòng lặp for - in trong mảng các số nguyên sô lần duyệt là 5*/
-let individualScores = [75, 43, 103, 87, 12]
-var teamScore = 0
-for score in individualScores {
-    if score > 50 {
-        teamScore += 3
+func greet(name: String, day: String)->String {
+    return "hello \(name), today is \(day)."
+}
+greet("Bod", "Tuesday")
+
+/*trả về nhiều giá trị từ một hàm*/
+
+func calculateStatistics(scores: [Int])->(min: Int, max: Int, sum: Int) {
+    var min = scores[0]
+    var max = scores[0]
+    var sum = 0
+    
+    for score in scores {
+        if score > max {
+            max = score
+        } else if score < min {
+            min = score
+        }
+        sum += score
+    }
+    return (min, max, sum)
+}
+
+let statistics = calculateStatistics([5, 3, 100, 3, 9])
+statistics.max
+statistics.min
+statistics.sum
+statistics.0
+statistics.1
+statistics.2
+
+/**/
+func sumOf(numbers: Int...) -> Int {
+    var sum = 0
+    for number in numbers {
+        sum += number
+    }
+    return sum
+}
+
+sumOf()
+sumOf(10, 20, 30)
+
+/**/
+func averageOf(numbers: Int...) -> Int {
+    var sum = 0
+    var count = 0
+    for number in numbers {
+        sum += number
+        count++
+    }
+    if count != 0 {
+        return sum / count
     } else {
-        teamScore += 1
+        return 0
     }
 }
-teamScore
 
-/*vvòng lặp for - in trong mảng các dictionnary Tổng số lần duyệt là 8*/
-let interestingNumbers = [
-    "Prime": [2, 3, 5, 7, 11, 13],
-    "Fibonacci": [1, 1, 2, 3, 5, 8],
-    "Square": [1, 4, 9, 16, 25],
-]
+averageOf()
+averageOf(2)
+averageOf(1, 30)
 
-var largest = 0
-for (kind, numbers) in interestingNumbers {
-    for number in numbers {
-        if number > largest {
-            largest = number
+/*
+Nested - hàm lồng nhau
+*/
+func returnFifteen() -> Int{
+    var y = 10
+    func add() {
+        y += 5
+    }
+    add()
+    return y
+}
+
+returnFifteen()
+
+/*
+    Hàm trả lại hàm khác
+*/
+
+func makeIncrementer() -> (Int -> Int) {
+    func addOne (number: Int) -> Int {
+        return 1 + number
+    }
+    return addOne
+}
+
+var increment = makeIncrementer()
+increment(7)
+
+/*
+    Hàm lấy tham số truyền vào là một hàm khác
+*/
+
+func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool {
+    for item in list {
+        if condition(item) {
+            return true
         }
     }
-}
-largest
-
-
-var times = 0
-let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-for (animalName, legCount) in numberOfLegs {
-    times += 1
-}
-times
-
-var firstForLoop = 0
-for i in 0..<4 {
-    firstForLoop += i
-}
-firstForLoop
-
-var optionalString: String? = "Hello"
-optionalString == nil
-
-var greeting = "Hello!"
-var optionalName: String? = nil
-if let name = optionalName {
-    greeting = "Hello, \(name)"
-} else {
-    greeting = "Hello"
+    return false
 }
 
-optionalName = "Hoang Bac"
-if let name = optionalName {
-    greeting = "Hello, \(name)"
+func lessThanTen(number: Int) -> Bool {
+    return number < 10
 }
 
-let vegetable = "red pepper"
+var numbers = [20, 19, 7, 12]
+hasAnyMatches(numbers, lessThanTen)
 
-/* 
-chương trình sẽ thực hiện lệnh switch case tương ứng và thoát khỏi câu lệnh switch,
-không thực hiện case tiếp theo nên không cần có break ở đây
+/*
+    Closures:
 */
-switch vegetable {
-    case "celery":
-        let vegetableComment = "Add some raisins and make ants on a log."
-    case "cucumber", "watercress":
-        let vegetableComment = "that would make a good tea sandwich."
-    case let x where x.hasSuffix("pepper"):
-        let vegetableComment = "Is it a spicy \(x)?"
-    default:
-        let vegetableComment = "Everything tastes good in soup."
+
+numbers.map({
+    (number: Int) -> Int in
+    let result = 3 * number
+    return result
+})
+
+numbers.map { (number: Int) -> Int in
+    if number > 0 {
+        return 0
+    } else {
+        return 1
+    }
 }
 
-/*while*/
+let mappedNumbers = numbers.map ({ number in 3 * number })
+mappedNumbers
 
-var n = 2
-while n < 100 {
-    n = n * 2
-}
-n
-
-var m = 2
-do {
-    m = m * 2
-} while m < 100
-m
+let sortedNumbers = sorted(numbers) {$0 > $1}
+sortedNumbers
