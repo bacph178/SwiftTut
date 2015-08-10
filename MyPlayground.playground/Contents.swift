@@ -2,136 +2,114 @@
 
 import UIKit
 
-func greet(name: String, day: String)->String {
-    return "hello \(name), today is \(day)."
+class Shape {
+    var numberOfSides = 0
+    func simpleDescription() -> String {
+        return "A shape with \(numberOfSides) sides."
+    }
 }
-greet("Bod", "Tuesday")
 
-/*trả về nhiều giá trị từ một hàm*/
+var shape = Shape()
+shape.numberOfSides = 7
+var shapeDescription = shape.simpleDescription()
+shapeDescription
 
-func calculateStatistics(scores: [Int])->(min: Int, max: Int, sum: Int) {
-    var min = scores[0]
-    var max = scores[0]
-    var sum = 0
+class NamedShape {
+    var numberOfSides: Int = 0
+    var name: String
     
-    for score in scores {
-        if score > max {
-            max = score
-        } else if score < min {
-            min = score
+    init (name: String) {
+        self.name = name
+    }
+    
+    func simpleDescription() -> String {
+        return "A shape with \(numberOfSides) sides."
+    }
+}
+
+class Square: NamedShape {
+    var sideLength: Double
+    
+    init (sideLength: Double, name: String) {
+        self.sideLength = sideLength
+        super.init(name: name)
+        numberOfSides = 4
+    }
+    
+    func area() -> Double {
+        return sideLength * sideLength
+    }
+    
+    override func simpleDescription() -> String {
+        return "A square with sides of length \(sideLength)."
+    }
+}
+
+let test = Square(sideLength: 5.2, name: "my test square")
+test.area()
+test.simpleDescription()
+
+class EquilateralTriangle: NamedShape {
+    var sideLength: Double = 0.0
+    init(sideLength: Double, name: String) {
+        self.sideLength = sideLength
+        super.init(name: name)
+        numberOfSides = 3
+    }
+    
+    var perimeter: Double {
+        get {
+            return 3.0 * sideLength
         }
-        sum += score
-    }
-    return (min, max, sum)
-}
-
-let statistics = calculateStatistics([5, 3, 100, 3, 9])
-statistics.max
-statistics.min
-statistics.sum
-statistics.0
-statistics.1
-statistics.2
-
-/**/
-func sumOf(numbers: Int...) -> Int {
-    var sum = 0
-    for number in numbers {
-        sum += number
-    }
-    return sum
-}
-
-sumOf()
-sumOf(10, 20, 30)
-
-/**/
-func averageOf(numbers: Int...) -> Int {
-    var sum = 0
-    var count = 0
-    for number in numbers {
-        sum += number
-        count++
-    }
-    if count != 0 {
-        return sum / count
-    } else {
-        return 0
-    }
-}
-
-averageOf()
-averageOf(2)
-averageOf(1, 30)
-
-/*
-Nested - hàm lồng nhau
-*/
-func returnFifteen() -> Int{
-    var y = 10
-    func add() {
-        y += 5
-    }
-    add()
-    return y
-}
-
-returnFifteen()
-
-/*
-    Hàm trả lại hàm khác
-*/
-
-func makeIncrementer() -> (Int -> Int) {
-    func addOne (number: Int) -> Int {
-        return 1 + number
-    }
-    return addOne
-}
-
-var increment = makeIncrementer()
-increment(7)
-
-/*
-    Hàm lấy tham số truyền vào là một hàm khác
-*/
-
-func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool {
-    for item in list {
-        if condition(item) {
-            return true
+        set {
+            sideLength = newValue / 3.0
         }
     }
-    return false
-}
-
-func lessThanTen(number: Int) -> Bool {
-    return number < 10
-}
-
-var numbers = [20, 19, 7, 12]
-hasAnyMatches(numbers, lessThanTen)
-
-/*
-    Closures:
-*/
-
-numbers.map({
-    (number: Int) -> Int in
-    let result = 3 * number
-    return result
-})
-
-numbers.map { (number: Int) -> Int in
-    if number > 0 {
-        return 0
-    } else {
-        return 1
+    
+    override func simpleDescription() -> String {
+        return "An equilateral triangle with sides of length \(sideLength)."
     }
 }
 
-let mappedNumbers = numbers.map ({ number in 3 * number })
-mappedNumbers
+var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
+triangle.perimeter
+triangle.perimeter = 9.9
+triangle.sideLength
 
-let sortedNumbers = sorted(numbers) {$0 > $1}
-sortedNumbers
+class TriangleAndSquare {
+    var triangle: EquilateralTriangle {
+        willSet {
+            square.sideLength = newValue.sideLength
+        }
+    }
+    
+    var square: Square {
+        willSet {
+            triangle.sideLength = newValue.sideLength
+        }
+    }
+    
+    init(size: Double, name: String) {
+        square = Square(sideLength: size, name: name)
+        triangle = EquilateralTriangle(sideLength: size, name: name)
+    }
+}
+
+var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
+triangleAndSquare.square.sideLength
+triangleAndSquare.triangle.sideLength
+triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
+triangleAndSquare.triangle.sideLength
+
+class Counter {
+    var count: Int = 0
+    func incrementBy(amount: Int, numberOfTimes times: Int) {
+        count += amount * times
+    }
+}
+
+var counter = Counter()
+counter.incrementBy(2, numberOfTimes: 7)
+
+let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
+let sideLength = optionalSquare?.sideLength
