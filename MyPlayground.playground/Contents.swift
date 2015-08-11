@@ -2,52 +2,33 @@
 
 import UIKit
 
-protocol ExampleProtocol {
-    var simpleDescription: String { get }
-    mutating func adjust()
+func repeat<Item>(item: Item, times: Int)->[Item] {
+    var result = [Item]()
+    for i in 0..times {
+        result.append(item)
+    }
+    return result
 }
 
-class SimpleClass: ExampleProtocol {
-    var simpleDescription: String = "A very simple class."
-    var anotherProperty: Int = 69105
-    func adjust() {
-        simpleDescription += " Now 100% adjusted."
-    }
+repeat("e", 3)
+
+enum OptionalValue<T> {
+    case None
+    case Some(T)
 }
 
-var a = SimpleClass()
-a.adjust()
-let aDescription = a.simpleDescription
+var possibleInteger: OptionalValue<Int> = .None
+possibleInteger = .Some(100)
 
-/*
-    từ khoá mutating dùng để đánh dấu phương thức được modified bởi structure
-    còn class thì không cần thiết
-*/
-struct SimpleStructure: ExampleProtocol {
-    var simpleDescription: String = "A simple structure"
-    mutating func adjust() {
-        simpleDescription += " (adjusted)"
-    }
+func anyCommonElements <T, U where T: SequenceType, U: SequenceType,
+    T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, rhs: U) -> Bool {
+        for lhsItem in lhs {
+            for rhsItem in rhs {
+                if lhsItem == rhsItem {
+                    return true
+                }
+            }
+        }
+        return false
 }
-
-var b = SimpleStructure()
-b.adjust()
-let bDescription = b.simpleDescription
-
-/*
-sử dụng extension để thêm vào một kiểu có sẵn
-*/
-
-extension Int: ExampleProtocol {
-    var simpleDescription: String {
-        return "the number \(self)"
-    }
-    
-    mutating func adjust() {
-        self += 42
-    }
-}
-
-var aInt:Int = 7
-aInt.simpleDescription
-aInt.adjust()
+anyCommonElements([1, 2, 3], [3])
