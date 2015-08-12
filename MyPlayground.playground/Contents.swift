@@ -2,10 +2,17 @@
 
 import UIKit
 
-let age = -3
 /*
-    sử dụng assert để debug nếu giá trị Bool trong câu lệnh là true thì chương trình
-tiếp tục chạy còn không thì nó sẽ bị crash tại câu lệnh assert, câu thông báo trong 
-câu lệnh assert có thể không cần thiêt
+    Swift cung hầu hết các phép toán giống với C +, -, *, /, %
+    Ngoài ra còn có các Overflow Operators không có trong C là bằng cách thêm &
+    vào trước các toán tử ta có &+, &-, &*
+    Giá trị nhận được sẽ quay vòng trong phạm vi của kiểu dữ liệu
+    Ngoài ra Swift cho phép bạn tự định nghĩa các phép toán
 */
-assert(age <= 0, "tuoi phai lon hon 0")
+
+var potentialOverflow = UInt16.max
+potentialOverflow = potentialOverflow &+ 5
+potentialOverflow
+
+var unsignedOverflow = UInt8.min
+unsignedOverflow = unsignedOverflow &- 1
