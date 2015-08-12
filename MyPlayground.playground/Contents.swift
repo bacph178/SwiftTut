@@ -2,61 +2,61 @@
 
 import UIKit
 
-let minValue = UInt8.min
-let maxValue = UInt8.max
-let decimalInteger = 17
-let binaryInteger = 0b10001
-let octalInterger = 0o21
-let hexadecimalInterger = 0x11
+let possibleNumber = "123"
+// let possibleNumber = "abc"
+let convertedNumber = possibleNumber.toInt()
 
-// Ép kiểu dữ liệu
+var serverResponseCode: Int? = 404
+serverResponseCode
+serverResponseCode = nil
+serverResponseCode
 
-let three = 3
-let pointOneFourOneFiveNine = 0.14159
-let pi = Double(three) + pointOneFourOneFiveNine
-// let pi2 = three + pointOneFourOneFiveNine //
-let integerPi = Int(pi)
-
-let twoThousand: UInt16 = 2_000
-let one: UInt8 = 1
-let twoThousandAndOne = twoThousand + UInt16(one)
-
-// Định nghĩa tên 1 kiểu dữ liệu
-
-typealias AudioSample = UInt16
-var maxAmplitudeFound = AudioSample.min
-
-// Kiểu dữ liệu Boolean
-
-let orangesAreOrange = true
-let turnipsAreDelicious = false
+//không khởi tạo giá trị thì mặc định là nil
+var surveyAnswer: String?
+surveyAnswer
 
 
-if turnipsAreDelicious {
-    let string = "Mmm, tasty turnips!"
+/*
+    Forced Unwrapping bằng cách thêm ! vào sau tên biến khi biết chắc chắn biến 
+đã có giá trị, khác nil
+*/
+
+if convertedNumber != nil {
+    convertedNumber
 } else {
-    let string = "Eww, turnios are horrible."
+    let string = "Không ổn"
 }
 
-let i = 1
-//if i {} //error
-if i == 1 {}
 
+/*
+    Optional Binding
+*/
 
-//tuples
+if let actualNumber = possibleNumber.toInt() {
+    possibleNumber
+    actualNumber
+} else {
+    possibleNumber
+}
 
-//http404Error is of type (Int, String)
-let http404Error = (404, "Not Found")
-http404Error.0
-http404Error.1
+/*
+    Sự khác biệt
+*/
 
-let (statusCode, statusMessage) = http404Error
-statusCode
-statusMessage
+let possibleString: String? = "An optional string."
+// let forcedString: String = possibleString        error
+//cần có dấu chấm than ở sau tên biến để unwrap optional
+let forcedString: String = possibleString!
 
-let (justTheStatusCode, _) = http404Error
-justTheStatusCode
+let assumedString: String! = "An implicitly unwrapped optional string."
+//let assumedString: String! = nil
+/*
+    Không cần thiết phải có dấu chấm than vì biến chắc chắn có giá trị
+*/
+let implicitString: String = assumedString
 
-let http200Status = (statusCode: 200, description: "OK")
-http200Status.statusCode
-http200Status.description
+if assumedString != nil {
+    assumedString
+} else {
+    let string = "Không ổn"
+}
