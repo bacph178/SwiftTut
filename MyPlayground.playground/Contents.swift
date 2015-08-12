@@ -2,61 +2,10 @@
 
 import UIKit
 
-let possibleNumber = "123"
-// let possibleNumber = "abc"
-let convertedNumber = possibleNumber.toInt()
-
-var serverResponseCode: Int? = 404
-serverResponseCode
-serverResponseCode = nil
-serverResponseCode
-
-//không khởi tạo giá trị thì mặc định là nil
-var surveyAnswer: String?
-surveyAnswer
-
-
+let age = -3
 /*
-    Forced Unwrapping bằng cách thêm ! vào sau tên biến khi biết chắc chắn biến 
-đã có giá trị, khác nil
+    sử dụng assert để debug nếu giá trị Bool trong câu lệnh là true thì chương trình
+tiếp tục chạy còn không thì nó sẽ bị crash tại câu lệnh assert, câu thông báo trong 
+câu lệnh assert có thể không cần thiêt
 */
-
-if convertedNumber != nil {
-    convertedNumber
-} else {
-    let string = "Không ổn"
-}
-
-
-/*
-    Optional Binding
-*/
-
-if let actualNumber = possibleNumber.toInt() {
-    possibleNumber
-    actualNumber
-} else {
-    possibleNumber
-}
-
-/*
-    Sự khác biệt
-*/
-
-let possibleString: String? = "An optional string."
-// let forcedString: String = possibleString        error
-//cần có dấu chấm than ở sau tên biến để unwrap optional
-let forcedString: String = possibleString!
-
-let assumedString: String! = "An implicitly unwrapped optional string."
-//let assumedString: String! = nil
-/*
-    Không cần thiết phải có dấu chấm than vì biến chắc chắn có giá trị
-*/
-let implicitString: String = assumedString
-
-if assumedString != nil {
-    assumedString
-} else {
-    let string = "Không ổn"
-}
+assert(age <= 0, "tuoi phai lon hon 0")
