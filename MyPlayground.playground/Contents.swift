@@ -2,75 +2,93 @@
 
 import UIKit
 
-/*
-    Không giống với phép gán ở các ngôn ngữ khác, Swift có cung cấp phép gán tuple
-*/
+var emptyString = ""
+//kiểm tra String rỗng
+if emptyString.isEmpty {}
 
-let (x, y) = (1, 2)
-x == 1
-y == 2
-
-/*
-    Không giống với phép chia dư chỉ được các ngôn ngữ lập trình chia dư cho số nguyên,
-    Swift cung cấp phép chia dư cho số thực
-*/
-// chia dư cho số nguyên giống với các ngôn ngữ lập trình khác
-let a = 9 % 4
-
-// Chia dư cho số thực khác với các ngôn ngữ lập trình khác
-let b = 8 % 2.5
-
-/* sự khác biệt giữa ++ trước và sau biến */
-
-var a1 = 0
-/*
-    khi ++ ở trước biến thì giá trị của biến được thay đổi trước sau đó mới thực hiện
-    các toán tử sau
-*/
-let b1 = ++a1
-b1 == 1
-a1 == 1
+//Character
+let exclamationMark: Character = "!"
+let catCharacters: [Character] = ["C", "a", "t", "!"]
+catCharacters == ["C", "a", "t", "!"]
+let catString = String(catCharacters)
+catString == "Cat!"
 
 /*
-    Khi ++ ở sau biến thì giá trị của biến được thay đổi sau khi thực hiện các toán tử 
-    có chưa biến
+    thêm 1 kí tự vào string bằng hàm apend
 */
-let c1 = a1++
-c1 == 1
-a1 == 2
+
+var hoangBac = "Hello"
+count(hoangBac)
+var exampleCharacter: Character = "!"
+hoangBac.append(exampleCharacter)
+count(hoangBac)
+
+//lấy chỉ số đầu tiên
+hoangBac.startIndex
+
+//lấy chỉ số cuối cùng
+hoangBac.endIndex
+
+//lấy chỉ số ngay sau chỉ số đầu tiên
+hoangBac.startIndex.successor()
+
+//lấy chỉ số ngay trước chỉ số cuối cùng
+hoangBac.endIndex.predecessor()
+
+//lấy chỉ số có khoảng cách 2 từ startIndex
+let index = advance(hoangBac.startIndex, 2)
+
+//lấy chỉ số có khoảng cách 3 từ index
+let index2 = advance(index, 3)
+hoangBac[index2]
 
 /*
-    Toán tử 3 ngôi
+    Dùng hàm indicies để tạo ra Range của tất cả các chỉ số được truy cập trong một
+    string
 */
 
-let contentHeight = 40
-let hasHeader = true
-let rowHeight = contentHeight + (hasHeader ? 50 : 20)
-
-/*
-    unwraps biến optional a nếu a chứa giá trị hoặc trả vè giá trị b nếu a nil
-*/
-
-var a2: Int? = 3
-var b2: Int = 5
-var c2: Int? = nil
-
-a2 ?? b2 == a2!
-c2 ?? b2 == b2
-a2 ?? b2 == (a2 != nil ? a2! :b2)
-
-/*
-    (a...b) khoảng giá trị từ a đến b bao gồm cả a và b
-*/
-
-for index in 1...5 {
-    index
+for i in indices(hoangBac) {
+    let a = "Heee"
 }
 
 /*
-    (a..<b) khoảng giá trị từ a đến b bao gồm a không bao gồm b
+    Inserting một kí tự vào một chỉ ố xác định
+*/
+var welcome = "hello"
+welcome.insert("!", atIndex: welcome.endIndex)
+welcome == "hello!"
+
+/*
+    chèn một string vào một string
+*/
+welcome.splice(" Bắc đẹp trai", atIndex: welcome.endIndex.predecessor())
+welcome == "hello Bắc đẹp trai!"
+
+/*
+    remove một kí tự tại một chỉ số xác định
+*/
+welcome.removeAtIndex(welcome.endIndex.predecessor())
+welcome == "hello Bắc đẹp trai"
+
+/*
+    remove một chuỗi con ở một khoảng nhất định
 */
 
-for index in 1..<5 {
-    index
+
+//"Voulez-vous un cafe" sử dụng LATIN SMALL LETTER E WITH ACUTE
+let eAcuteQuestion = "Voulez-vous un caf\u{E9}"
+
+//"Voulez-vous un cafe" sử dụng LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
+let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}"
+
+if eAcuteQuestion == combinedEAcuteQuestion {
+    let string = "OK rui"
 }
+
+/*
+    hasPrefix kiểm tra string có chứa chuỗi ở cuối không
+*/
+
+let testString = "ok rui nhe"
+testString.hasPrefix("ok") == true
+testString.hasSuffix("nhe") == true
