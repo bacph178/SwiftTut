@@ -3,105 +3,82 @@
 import UIKit
 
 /*
-    khai báo và khởi tạo một mảng
+    Multiple matches for a single switch case
 */
 
-var someInts = [Int]()
-someInts.count == 0
-
-var threeDoubles = [Double](count: 3, repeatedValue: 3.0)
-threeDoubles == [3, 3, 3]
-
-/*
-    cộng 2 mảng
-*/
-
-var anotherThreeDoubles = [Double](count: 2, repeatedValue: 2.5)
-var fiveDoubles = threeDoubles + anotherThreeDoubles
-
-/*
-    lấy chỉ số và giá trị tương ứng trong mảng dùng vòng for
-*/
-
-for (index, value) in enumerate(fiveDoubles) {
-    index
-    value
+let anotherCharracter: Character = "a"
+switch anotherCharracter {
+    case "a", "A":
+        let a = "OK"
+    default:
+        let b = "not Ok"
 }
 
 /*
-    Thao tác với tập hợp Set
+    Interval Matching
 */
-var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
-favoriteGenres.insert("pop")
-let result1 = favoriteGenres.remove("Classical")
-let result2 = favoriteGenres.remove("hehe")
-let result3 = sorted(favoriteGenres)
 
-var set1: Set = [1, 2, 3, 4, 5, 6]
-var set2: Set = [4, 5, 6, 7, 8, 9, 10]
-var set3: Set = [1, 2]
+let count = 3_000_000_000_000
+let countedThings = "stars in the Milky Way"
+var naturalCount: String
+switch count {
+case 0:
+    naturalCount = "no"
+case 1...3:
+    naturalCount = "a few"
+case 4...9:
+    naturalCount = "several"
+case 10...99:
+    naturalCount = "tens of"
+case 100...999:
+    naturalCount = "hundreds of"
+case 1000...999_999:
+    naturalCount = "thousands of"
+default:
+    naturalCount = "millions and millions of"
+}
 
 /*
-    set1.uinion(set2) trả về tập hợp bao gồm các phần tử của cả 2 tập (hợp của 2 tập)
+    sử dụng tuples để kiểm tra nhiều giá trị trong switch, ở đây dấu _ được sử
+    sử dụng nếu chúng ta không cần sử dụng nó trong đoạn code thực thi, nếu cần 
+    sử dụng thì ta có thể khai báo biến hoăc hằng thay cho dấu _
 */
-sorted(set1.union(set2))
+
+let somePoint = (1, 1)
+var testString: String
+switch somePoint {
+case (0, 0):
+    testString = "là gốc toạ độ"
+case (_, 0):
+    testString = "nằm trên tục x"
+case (0, _):
+    testString = "nằm trên trục y"
+case(-2...2, -2...2):
+    testString = "nằm trong cái hộp"
+default:
+    testString = "khoong nam trong cai hop"
+}
+
+let anotherPoint = (5, 7)
+switch anotherPoint {
+case (let x, 0):
+    x
+case (0, let y):
+    y
+case let (x, y):
+    (x, y)
+}
 
 /*
-    set1.intersect(set2) trả về tập hợp các phần tử thuộc cả 2 tập (giao của 2 tập)
-*/
-sorted(set1.intersect(set2))
-
-/*
-    set1.subtract(set2) trả về tập hợp các phần tử chỉ thuộc tập 1 không thuộc tập 2 (set1/set2)
+    có thể sử dụng where để thêm điều kiện vào câu lệnh
 */
 
-sorted(set1.subtract(set2))
-
-/*
-    set1.exclusiveOr(set2) trả về tập hợp các phần tử chỉ thuộc 1 không thuộc 2 và 
-    các phần tử chỉ thuộc 2 không thuộc 1
-*/
-sorted(set1.exclusiveOr(set2))
-
-/*
-    kiểm tra xem tập 1 có là cha của tập 3
-*/
-set1.isSupersetOf(set3) == true
-set1.isSupersetOf(set1) == true
-
-/*
-    kiểm tra xem tập 3 có là con của tập 1
-*/
-set3.isSubsetOf(set1) == true
-set3.isSubsetOf(set3) == true
-
-/*
-    kiểm tra xem tập 1 có là cha của tập 3 nhưng không bằng tập 3
-*/
-set1.isStrictSupersetOf(set3) == true
-set1.isStrictSupersetOf(set1) == false
-
-
-/*
-    kiểm tra xem tập 3 có là con của tập 1 nhưng không bằng tập 1
-*/
-
-set3.isStrictSubsetOf(set1) == true
-set3.isStrictSubsetOf(set3) == false
-
-/*
-    kiểm tra xem 2 tập có phần tử chung không
-*/
-set2.isDisjointWith(set3) == true //2 tập không có phần tử chung
-
-set1
-let first = set1[set1.startIndex].hashValue == 5
-
-/*
-    ditionary.updateValue() thêm vào 1 phần từ mới nếu key không tôn tại giá trị trả về là nil
-    hoặc update giá trị của key nếu key đã tồn tại và giá trị trả về là giá trị cũ của key
-    Nhưng vậy hàm này trả về 1 biến optional của kiểu dữ liệu
-*/
-var airports = ["YYZ": "toronto", "DUB": "Dublin"]
-airports.updateValue("Hoang Bac", forKey: "HBA")
-airports.updateValue("Lien yeu", forKey: "YYZ")
+let yetAnotherPoint = (1, 5)
+switch yetAnotherPoint {
+case let (x, y) where x == y:
+    (x, y)
+case let (x, y) where x == -y:
+    (x, y)
+case let (x, y):
+    (x, y)
+}
