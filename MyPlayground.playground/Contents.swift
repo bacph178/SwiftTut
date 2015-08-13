@@ -3,82 +3,70 @@
 import UIKit
 
 /*
-    Multiple matches for a single switch case
+    Continue: Thực hiện thông báo đã làm xong vòng lặp iteration hiện tại, tiếp 
+    đến đoạn code sau
 */
 
-let anotherCharracter: Character = "a"
-switch anotherCharracter {
-    case "a", "A":
-        let a = "OK"
+let puzzleInput = "great minds think alike"
+var puzzleOutput = ""
+for character in puzzleInput {
+    switch character {
+//    case "a", "e", "i", "o", "u", " ":
+//        continue
+//    default:
+//        puzzleOutput.append(character)
+    case "g", "r", "t", "m", "n", "d", "s", "h", "k", "l":
+        puzzleOutput.append(character)
     default:
-        let b = "not Ok"
+        continue
+    }
 }
+puzzleOutput
 
 /*
-    Interval Matching
+    break thực hiện dừng vòng lặp hoặc bỏ qua case in câu lệnh switch
 */
 
-let count = 3_000_000_000_000
-let countedThings = "stars in the Milky Way"
-var naturalCount: String
-switch count {
-case 0:
-    naturalCount = "no"
-case 1...3:
-    naturalCount = "a few"
-case 4...9:
-    naturalCount = "several"
-case 10...99:
-    naturalCount = "tens of"
-case 100...999:
-    naturalCount = "hundreds of"
-case 1000...999_999:
-    naturalCount = "thousands of"
+/*
+    Fallthrough trong switch của Swift thì sau khi match được case nó thực hiện 
+    sẽ thoát khỏi câu lệnh switch nhưng thêm Falthrough sau đoạn lệnh được thực 
+    hiện trong case được match nó sẽ tiếp tục thực hiện các case sau
+*/
+
+let integerToDescribe = 5
+var description = "The numver \(integerToDescribe) is"
+switch integerToDescribe {
+case 2, 3, 5 , 7, 11, 13, 17, 19:
+    description += " a prime number, and also"
+    fallthrough
 default:
-    naturalCount = "millions and millions of"
+    description += " an integer."
 }
 
-/*
-    sử dụng tuples để kiểm tra nhiều giá trị trong switch, ở đây dấu _ được sử
-    sử dụng nếu chúng ta không cần sử dụng nó trong đoạn code thực thi, nếu cần 
-    sử dụng thì ta có thể khai báo biến hoăc hằng thay cho dấu _
-*/
-
-let somePoint = (1, 1)
-var testString: String
-switch somePoint {
-case (0, 0):
-    testString = "là gốc toạ độ"
-case (_, 0):
-    testString = "nằm trên tục x"
-case (0, _):
-    testString = "nằm trên trục y"
-case(-2...2, -2...2):
-    testString = "nằm trong cái hộp"
-default:
-    testString = "khoong nam trong cai hop"
+let finalSquare = 25
+var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+board[03] = +08
+board[06] = +11
+board[09] = +09
+board[10] = +02
+board[14] = -10
+board[19] = -11
+board[22] = -02
+board[24] = -08
+var square = 0
+var diceRoll = 0
+gameLoop: while square != finalSquare {
+    if ++diceRoll == 7 {
+        diceRoll = 1
+    }
+    switch square + diceRoll {
+    case finalSquare:
+        break gameLoop
+    case let newSquare where newSquare > finalSquare:
+        continue gameLoop
+    default:
+        square += diceRoll
+        square += board[square]
+    }
 }
-
-let anotherPoint = (5, 7)
-switch anotherPoint {
-case (let x, 0):
-    x
-case (0, let y):
-    y
-case let (x, y):
-    (x, y)
-}
-
-/*
-    có thể sử dụng where để thêm điều kiện vào câu lệnh
-*/
-
-let yetAnotherPoint = (1, 5)
-switch yetAnotherPoint {
-case let (x, y) where x == y:
-    (x, y)
-case let (x, y) where x == -y:
-    (x, y)
-case let (x, y):
-    (x, y)
-}
+square
