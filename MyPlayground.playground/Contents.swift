@@ -2,93 +2,106 @@
 
 import UIKit
 
-var emptyString = ""
-//kiểm tra String rỗng
-if emptyString.isEmpty {}
-
-//Character
-let exclamationMark: Character = "!"
-let catCharacters: [Character] = ["C", "a", "t", "!"]
-catCharacters == ["C", "a", "t", "!"]
-let catString = String(catCharacters)
-catString == "Cat!"
-
 /*
-    thêm 1 kí tự vào string bằng hàm apend
+    khai báo và khởi tạo một mảng
 */
 
-var hoangBac = "Hello"
-count(hoangBac)
-var exampleCharacter: Character = "!"
-hoangBac.append(exampleCharacter)
-count(hoangBac)
+var someInts = [Int]()
+someInts.count == 0
 
-//lấy chỉ số đầu tiên
-hoangBac.startIndex
-
-//lấy chỉ số cuối cùng
-hoangBac.endIndex
-
-//lấy chỉ số ngay sau chỉ số đầu tiên
-hoangBac.startIndex.successor()
-
-//lấy chỉ số ngay trước chỉ số cuối cùng
-hoangBac.endIndex.predecessor()
-
-//lấy chỉ số có khoảng cách 2 từ startIndex
-let index = advance(hoangBac.startIndex, 2)
-
-//lấy chỉ số có khoảng cách 3 từ index
-let index2 = advance(index, 3)
-hoangBac[index2]
+var threeDoubles = [Double](count: 3, repeatedValue: 3.0)
+threeDoubles == [3, 3, 3]
 
 /*
-    Dùng hàm indicies để tạo ra Range của tất cả các chỉ số được truy cập trong một
-    string
+    cộng 2 mảng
 */
 
-for i in indices(hoangBac) {
-    let a = "Heee"
+var anotherThreeDoubles = [Double](count: 2, repeatedValue: 2.5)
+var fiveDoubles = threeDoubles + anotherThreeDoubles
+
+/*
+    lấy chỉ số và giá trị tương ứng trong mảng dùng vòng for
+*/
+
+for (index, value) in enumerate(fiveDoubles) {
+    index
+    value
 }
 
 /*
-    Inserting một kí tự vào một chỉ ố xác định
+    Thao tác với tập hợp Set
 */
-var welcome = "hello"
-welcome.insert("!", atIndex: welcome.endIndex)
-welcome == "hello!"
+var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
+favoriteGenres.insert("pop")
+let result1 = favoriteGenres.remove("Classical")
+let result2 = favoriteGenres.remove("hehe")
+let result3 = sorted(favoriteGenres)
+
+var set1: Set = [1, 2, 3, 4, 5, 6]
+var set2: Set = [4, 5, 6, 7, 8, 9, 10]
+var set3: Set = [1, 2]
 
 /*
-    chèn một string vào một string
+    set1.uinion(set2) trả về tập hợp bao gồm các phần tử của cả 2 tập (hợp của 2 tập)
 */
-welcome.splice(" Bắc đẹp trai", atIndex: welcome.endIndex.predecessor())
-welcome == "hello Bắc đẹp trai!"
+sorted(set1.union(set2))
 
 /*
-    remove một kí tự tại một chỉ số xác định
+    set1.intersect(set2) trả về tập hợp các phần tử thuộc cả 2 tập (giao của 2 tập)
 */
-welcome.removeAtIndex(welcome.endIndex.predecessor())
-welcome == "hello Bắc đẹp trai"
+sorted(set1.intersect(set2))
 
 /*
-    remove một chuỗi con ở một khoảng nhất định
+    set1.subtract(set2) trả về tập hợp các phần tử chỉ thuộc tập 1 không thuộc tập 2 (set1/set2)
 */
 
-
-//"Voulez-vous un cafe" sử dụng LATIN SMALL LETTER E WITH ACUTE
-let eAcuteQuestion = "Voulez-vous un caf\u{E9}"
-
-//"Voulez-vous un cafe" sử dụng LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
-let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}"
-
-if eAcuteQuestion == combinedEAcuteQuestion {
-    let string = "OK rui"
-}
+sorted(set1.subtract(set2))
 
 /*
-    hasPrefix kiểm tra string có chứa chuỗi ở cuối không
+    set1.exclusiveOr(set2) trả về tập hợp các phần tử chỉ thuộc 1 không thuộc 2 và 
+    các phần tử chỉ thuộc 2 không thuộc 1
+*/
+sorted(set1.exclusiveOr(set2))
+
+/*
+    kiểm tra xem tập 1 có là cha của tập 3
+*/
+set1.isSupersetOf(set3) == true
+set1.isSupersetOf(set1) == true
+
+/*
+    kiểm tra xem tập 3 có là con của tập 1
+*/
+set3.isSubsetOf(set1) == true
+set3.isSubsetOf(set3) == true
+
+/*
+    kiểm tra xem tập 1 có là cha của tập 3 nhưng không bằng tập 3
+*/
+set1.isStrictSupersetOf(set3) == true
+set1.isStrictSupersetOf(set1) == false
+
+
+/*
+    kiểm tra xem tập 3 có là con của tập 1 nhưng không bằng tập 1
 */
 
-let testString = "ok rui nhe"
-testString.hasPrefix("ok") == true
-testString.hasSuffix("nhe") == true
+set3.isStrictSubsetOf(set1) == true
+set3.isStrictSubsetOf(set3) == false
+
+/*
+    kiểm tra xem 2 tập có phần tử chung không
+*/
+set2.isDisjointWith(set3) == true //2 tập không có phần tử chung
+
+set1
+let first = set1[set1.startIndex].hashValue == 5
+
+/*
+    ditionary.updateValue() thêm vào 1 phần từ mới nếu key không tôn tại giá trị trả về là nil
+    hoặc update giá trị của key nếu key đã tồn tại và giá trị trả về là giá trị cũ của key
+    Nhưng vậy hàm này trả về 1 biến optional của kiểu dữ liệu
+*/
+var airports = ["YYZ": "toronto", "DUB": "Dublin"]
+airports.updateValue("Hoang Bac", forKey: "HBA")
+airports.updateValue("Lien yeu", forKey: "YYZ")
