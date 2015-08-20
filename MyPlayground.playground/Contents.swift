@@ -2,57 +2,80 @@
 
 import UIKit
 
-/*
-    cấu trúc chung
-
-subscript(index: Int) -> Int {
-    get {
-        //return an appropriate subscript value
+class Vehicle {
+    var currentSpeed = 0.0
+    var description: String {
+        return "traveling at \(currentSpeed) miles per hour"
     }
-    set {
-        //perform a suitable setting action here
+    func makeNoise() {
     }
 }
-    có thể viết subscript read-only bằng cách bỏ setter và bỏ từ khoá get như sau:
 
-    subscript(index: Int) -> Int {
-        //return an appropriate value subscript value
-    }
+let someValue = Vehicle()
+someValue.description
+
+class Bicycle: Vehicle {
+    var hasBasket = false
+}
+
+let bicycle = Bicycle()
+bicycle.hasBasket = true
+bicycle.currentSpeed = 15.0
+bicycle.description
+
+class Tandem: Bicycle {
+    var currentNumberOfPassengers = 0
+}
+
+let tanDem = Tandem()
+tanDem.hasBasket = true
+tanDem.currentNumberOfPassengers = 2
+tanDem.currentSpeed = 22
+tanDem.description
+
+/*
+    Overriding
 */
 
-struct TimesTable {
-    let multiplier: Int
-    subscript(index: Int) -> Int {
-        return multiplier * index
+class  Train: Vehicle {
+    override func makeNoise() {
+        let noise = "Choo Choo"
     }
 }
 
-let threeTimesTable = TimesTable(multiplier: 3)
-threeTimesTable[1]
+let train = Train()
+train.makeNoise()
 
-struct Matrix {
-    let rows: Int, columns: Int
-    var grid: [Double]
-    init (rows: Int, columns: Int) {
-        self.rows = rows
-        self.columns = columns
-        grid = Array(count: rows * columns, repeatedValue: 0.0)
+
+/*
+    có thể overriding một biết read-only -> read - write nhưng không thể ngược lại
+*/
+
+class Car: Vehicle {
+    var gear = 1
+    override var description: String {
+        return super.description + " in gear \(gear)"
     }
-    
-    func indexIsValidForRow(row: Int, column: Int) -> Bool {
-        return row >= 0 && row < rows && column >= 0 && column < columns
-    }
-    
-    subscript(row: Int, column: Int) -> Double {
-        get {
-            assert(indexIsValidForRow(row, column: column), "Index out of range")
-            return grid[(row * column) + column]
-        }
-        set {
-            assert(indexIsValidForRow(row, column: column), "Index out of range")
-            grid[(row * column) + column] = newValue
+}
+
+let car = Car()
+car.currentSpeed = 25
+car.gear = 3
+car.description
+
+class AutomaticCar: Car {
+    override var currentSpeed: Double {
+        didSet {
+            gear = Int(currentSpeed / 10.0) + 1
         }
     }
 }
 
-var matrix = Matrix(rows: 2, columns: 2)
+let automaticCar = AutomaticCar()
+automaticCar.currentSpeed = 35
+automaticCar.description
+
+/*
+    có thể tránh việc overridden bằng cách thêm tiền tố final vào trước tên thuộc tính
+    phương thức, hoặc supscript
+*/
