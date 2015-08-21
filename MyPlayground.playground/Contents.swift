@@ -3,36 +3,43 @@
 import UIKit
 
 /*
-    let someProperty: SomeType = {
-        return someValue
-    }()
-    someValue cùng kiểu với SomeType
+    thường sử dụng với các class làm việc với file và ghi dữ liệu
+    cấu trúc
+    deinit {}
 */
 
-class SomeClass {
-    let someProperty: Int = {
-        return 10
-    }()
-}
-
-struct Checkerboard {
-    let boardColors:[Bool] = {
-       var temporaryBoard = [Bool]()
-        var isBlack = false
-        for i in 1...10 {
-            for i in 1...10 {
-                temporaryBoard.append(isBlack)
-                isBlack = !isBlack
-            }
-            isBlack = !isBlack
-        }
-        return temporaryBoard
-    }()
-    func squareIsBlackAtRow(row: Int, column: Int) -> Bool {
-        return boardColors[(row * 10) + column]
+struct Bank {
+    static var coinsInBank = 10_000
+    static func vendCoins (var numberOfCoinsToVend: Int) -> Int {
+        numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
+        coinsInBank -= numberOfCoinsToVend
+        return numberOfCoinsToVend
+    }
+    static func receiveCoins(coins: Int) {
+        coinsInBank += coins
     }
 }
 
-let board = Checkerboard()
-board.squareIsBlackAtRow(0, column: 1)
-board.squareIsBlackAtRow(9, column: 9)
+class Player {
+    var coinsInPurse: Int = 0
+    init(coins: Int) {
+        coinsInPurse += Bank.vendCoins(coins)
+    }
+    func winCoins(coins: Int) {
+        coinsInPurse += Bank.vendCoins(coins)
+    }
+    deinit {
+        Bank.receiveCoins(coinsInPurse)
+    }
+}
+
+var playerOne: Player? = Player(coins: 100)
+playerOne!.coinsInPurse
+Bank.coinsInBank
+
+playerOne!.winCoins(2_000)
+Bank.coinsInBank
+
+playerOne = nil
+
+Bank.coinsInBank
